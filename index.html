@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced RFID and PIT Tag Technology in Fisheries</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --background-color: #1c1c1e;
+            --foreground-color: #f5f5f7;
+            --primary-color: #ff9500;
+            --secondary-color: #ffbf80;
+            --accent-color: #ff9500;
+            --nav-background: rgba(30, 30, 30, 0.85);
+            --content-background: rgba(45, 45, 47, 0.85);
+            --footer-background: #262626;
+            --footer-text-color: #8e8e93;
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --transition-duration: 0.3s;
+        }
+
+       /* Global Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    line-height: 1.6;
+    font-size: 18px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+
+    /* Add background image */
+    background-image: url('images/River.jpg');
+    background-size: cover; /* Make sure the background covers the whole page */
+    background-attachment: fixed; /* Keeps the background in place during scroll */
+    background-position: center; /* Center the background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+/* Hero section already has its own background, so no changes needed */
+
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--foreground-color);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 20px;
+            color: var(--primary-color);
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 5px;
+            height: 30px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        h4 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+        p {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        /* Navigation Styles */
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--nav-background);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--box-shadow);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: var(--foreground-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color var(--transition-duration), color var(--transition-duration);
+        }
+
+        .nav a:hover, .nav a.active {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(28,28,30,0.8), rgba(28,28,30,0.8)), url('images/Fish.jpg') center/cover no-repeat;
+            background-position: center bottom;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--foreground-color);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            animation: fadeInDown 1s ease forwards;
+            opacity: 0;
+        }
+
+        .hero p {
+            font-size: 30px;
+            max-width: 800px;
+            margin: 20px auto;
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
+        }
+        .hero p span {
+    color: var(--secondary-color); /* Change color of the highlighted text */
+}
+
+        .hero .cta-button {
+            margin-top: 30px;
+            font-size: 22px; /* Increase button font size */
+    padding: 15px 40px; /* Adjust padding for a larger button */
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+            animation-delay: 1s;
+        }
+
+        /* Hover effect on the button for more interactivity */
+.hero .cta-button:hover {
+    background-color: #ff7700;
+    transform: scale(1.1); /* Enlarge slightly on hover */
+}
+
+        /* Content Styles */
+        .content {
+            padding: 40px;
+            display: none;
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: var(--content-background);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            transform: translateY(20px);
+        }
+
+        .content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInContent 0.5s ease forwards;
+        }
+
+        /* Section Transitions */
+        .content-section {
+            opacity: 0;
+            animation: fadeInContent 0.8s ease forwards;
+        }
+
+        .content-section:nth-child(odd) {
+            animation-delay: 0.3s;
+        }
+
+        .content-section:nth-child(even) {
+            animation-delay: 0.6s;
+        }
+
+        /* Cards */
+        .card {
+            background-color: rgba(60, 60, 62, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Image Styling */
+        .content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Typography and Lists */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            padding: 8px 0;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--footer-background);
+            color: var(--footer-text-color);
+            font-size: 16px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Button Styles */
+        button, .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color var(--transition-duration), transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.4);
+            margin-top: 15px;
+        }
+
+        button:hover, .cta-button:hover {
+            background-color: #ff7700;
+            transform: scale(1.05);
+        }
+
+        
+        /* Table Styles */
+/* Table Styles */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Ensures the table can scroll on small devices */
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 25px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.styled-table thead tr {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.styled-table tbody tr {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.styled-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .styled-table th, .styled-table td {
+        padding: 10px 8px;
+        font-size: 16px;
+    }
+}
+
+
+
+        /* Quiz Styles */
+        .question {
+            margin: 30px 0;
+            background-color: rgba(50, 50, 52, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+    
+        /* Slider Styling */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 149, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.animation-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 600px;
+    height: 400px;
+    background-color: rgba(45, 45, 47, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+/* Slider and Oscillation Graph Styling */
+.slider-container {
+    margin: 30px 0;
+    background-color: rgba(50, 50, 52, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    outline: none;
+}
+
+.canvas-container {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+canvas {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h4 {
+    font-size: 24px;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+
+
+        /* Inputs and Labels */
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        label {
+            cursor: pointer;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.4);
+            transition: background-color var(--transition-duration), transform 0.2s ease;
+        }
+
+        .scroll-top:hover {
+            background-color: #ff7700;
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .nav a {
+                margin: 0 10px;
+                font-size: 14px;
+                padding: 8px 10px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            h3 {
+                font-size: 20px;
+            }
+
+            button, .cta-button {
+                font-size: 16px;
+                padding: 10px 25px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 20px;
+            }
+        }
+        .image-container {
+    text-align: center;
+    margin: 20px 0; /* Optional: add spacing around the image container */
+}
+
+.image-container img {
+    margin: 10px; /* Optional: space between the images */
+}
+.oscillation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px; /* Optional: add spacing above the canvas */
+}
+
+.oscillation-container canvas {
+    display: block; /* Ensures it's treated as a block element */
+    margin: 0 auto; /* Centers it horizontally */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Optional: adds a border around the canvas */
+    border-radius: 10px; /* Optional: rounds the corners of the canvas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Optional: adds a shadow effect */
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero" id="hero">
+    <h1>Advanced RFID & PIT Tag Technology</h1>
+    <p><span>Unlock the mysteries of RFID and PIT tag technology in fisheries with our comprehensive course designed for learners of all backgrounds.</span></p>
+    <button class="cta-button" onclick="enterCourse()">Enter Course</button>
+</div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav" id="navBar" style="display: none;">
+        <a class="active" onclick="openTab(event, 'overview')">Course Overview</a>
+        <a onclick="openTab(event, 'section1')">Introduction</a>
+        <a onclick="openTab(event, 'section2')">Electromagnetic Principles</a>
+        <a onclick="openTab(event, 'sectionLC')">LC Circuits</a>
+        <a onclick="openTab(event, 'sectionGeneralPIT')">General PIT Operations</a>
+        <a onclick="openTab(event, 'section4')">Communication Techniques</a>
+        <a onclick="openTab(event, 'section6')">Antenna Construction</a>
+        <a onclick="openTab(event, 'applicationsFuture')">Applications & Future</a>
+        <a onclick="openTab(event, 'quiz')">Quiz</a>
+    </div>
+    
+
+    <!-- Course Overview -->
+    <div id="overview" class="content">
+        <h2>Course Overview</h2>
+        <div class="card">
+        <p>This comprehensive course explores the principles and applications of Radio Frequency Identification (RFID) and Passive Integrated Transponder (PIT) tag technology, focusing on fisheries science. Designed for students with limited physics backgrounds, the course demystifies the technology by providing detailed explanations and practical examples. Students will gain a deep understanding of electromagnetic principles, communication methods—including Half Duplex (HDX) and Full Duplex (FDX)—system components like antenna design and LC circuits, and practical considerations involved in deploying PIT tags for fish monitoring and research.</p>
+    </div>
+        <h3>Course Objectives</h3>
+        <div class="card">
+        <ul>
+            <li>Grasp fundamental concepts of RFID and PIT tag technology.</li>
+            <li>Understand electromagnetic principles relevant to RFID systems.</li>
+            <li>Examine various communication techniques used in RFID, including HDX and FDX.</li>
+            <li>Analyze the design and functionality of PIT tag systems, emphasizing antenna design and LC circuits.</li>
+            <li>Assess the applications, limitations, and ethical considerations of PIT technology in fisheries.</li>
+            <li>Articulate the physics and science behind PIT tagging in an accessible manner.</li>
+        </ul>
+    </div>
+</div>
+    <!-- Section 1: Introduction -->
+    <div id="section1" class="content">
+        <h2>Section 1: Introduction to RFID and PIT Tag Technology</h2>
+        <hr>
+
+        <h3>1.1 Overview of RFID Systems</h3>
+        <div class="card content-section">
+        <p>Radio Frequency Identification (RFID) is a technology that uses electromagnetic waves to automatically identify and track objects. Just as visible light allows us to see and identify objects around us, RFID uses radio waves—another form of electromagnetic radiation—to detect and read information from tags attached to objects. An RFID system consists of three main components: tags, readers, and antennas.</p>
+
+        <p>The tags, also known as transponders, are small devices that store data, typically a unique identification number. The reader, or interrogator, sends out electromagnetic waves through its antenna to power and communicate with the tag. The tag's antenna receives this energy and uses it to transmit its stored information back to the reader. RFID systems operate across various frequency ranges, each with unique properties affecting read range and data transfer rates. Low-frequency (LF) systems, operating around 125–134.2 kHz, are commonly used for animal tracking, including PIT tags in fisheries.</p>
+    </div>
+
+        <h3>1.2 Evolution of PIT Tags</h3>
+        <div class="card content-section">
+        <p>Passive Integrated Transponder (PIT) tags are a specialized type of RFID tag that are passive—they have no internal power source. They rely entirely on the energy transmitted by the reader's electromagnetic field, making them lightweight and durable. PIT tags were developed in the 1980s to provide a reliable method for long-term identification of individual animals. Advances in microelectronics and materials science have led to the miniaturization of PIT tags, enabling their use in small fish species without impacting their health. Modern PIT tags are encapsulated in biocompatible materials like glass or medical-grade polymers to prevent adverse reactions when implanted.</p>
+
+        <p>Operating at 134.2 kHz, a low frequency that allows effective communication even in challenging environments like water, PIT tags can be detected at ranges up to 1 meter (approximately 3 feet). This range is practical for monitoring fish movements in natural habitats.</p>
+    </div>
+
+        <h3>1.3 Applications in Fisheries</h3>
+        <div class="card content-section">
+        <p>In fisheries science, PIT tags are extensively used for monitoring and studying fish populations. They allow researchers to individually identify fish over long periods, facilitating studies on growth rates, survival, migration patterns, and habitat use. By implanting PIT tags in fish, data can be collected without the need to recapture or handle the fish repeatedly, minimizing stress and potential harm.</p>
+   
+        <p>For example, researchers studying salmon migration install fixed detection stations along rivers to automatically record tagged fish as they pass. This data provides valuable insights into migration timing, route selection, and survival rates. Such information is crucial for understanding the impacts of environmental changes, habitat alterations, and conservation measures on fish populations.</p>
+    </div>
+        
+    </div>
+
+    <!-- Section 2: Electromagnetic Principles -->
+    <div id="section2" class="content">
+        <h2>Section 2: Electromagnetic Principles in RFID</h2>
+        <hr>
+        <h3>2.1 Fundamentals of Electromagnetism</h3>
+        <div class="card content-section">
+        <p>Electromagnetism is the branch of physics that deals with the study of electric and magnetic fields and their interactions with matter. Electromagnetic waves encompass a broad spectrum, including visible light, radio waves, microwaves, infrared, ultraviolet, X-rays, and gamma rays. All these are fundamentally the same phenomenon—oscillations of electric and magnetic fields—but differ in frequency and wavelength.</p>
+        
+        <p>The electromagnetic spectrum can be thought of as a rainbow that extends beyond the colors we can see with our eyes. Visible light occupies a small portion of this spectrum, with wavelengths ranging from approximately 400 to 700 nanometers (nm). Radio waves, used in RFID systems, have much longer wavelengths, ranging from millimeters to kilometers.</p>
+        <div class="image-container">
+        <img src="images/EMS.webp" alt="FDX" width="500">
+        </div>
+        </div>
+        <div class="card content-section">
+        <p>In PIT systems, the reader emits electromagnetic waves that interact with the tag. The behavior of these waves is governed by <stong> Maxwell's equations</stong>, which describe how electric and magnetic fields are generated and altered by each other and by charges and currents. <strong>Faraday's Law </strong> tells us that when a magnetic field changes over time, it generates an electric field. <strong> Ampère's Law</strong> says that a changing electric field produces a magnetic field.
+
+            When these two principles work together, they create <strong>self-propagating</strong> electromagnetic waves. As the electric field changes, it creates a magnetic field, and as the magnetic field changes, it creates an electric field. This process keeps repeating, allowing the wave to travel through space without needing any material to move through (like air or water). This is how electromagnetic radiation (like light, radio waves, and microwaves) can travel through the vacuum of space. </p>
+            <div class="image-container">
+                <img src="images/EMW.jpg" alt="FDX" width="500">
+                <img src="images/Faradays.gif" width="500">
+            </div>
+        </div>
+<h3>Electromagnetic Wave Analogy: The Stadium Wave</h3>
+<div class="card content-section">
+
+    <p>Imagine a stadium filled with people sitting in a large circle, representing points in space. Each person symbolizes the electric and magnetic fields at their location. Instead of physically moving, the people oscillate by standing and sitting, representing the changing electric field, while waving their arms side to side represents the magnetic field. As the wave passes, the electric field rises (standing) and falls (sitting), while the magnetic field oscillates perpendicularly (waving arms).
+    
+        The wave moves through the stadium, but the people (fields) stay in place—just as electromagnetic waves propagate through space without the physical movement of matter. The oscillating electric and magnetic fields sustain each other, allowing the wave to travel continuously through space. The frequency of the wave depends on how quickly people stand and sit (oscillate), while the wavelength relates to the spacing between them.</p>
+</div>   
+        <!-- Key Terms Section -->
+    
+
+        <hr>
+        <h3>Before we dive into how a PIT tag system works, let’s define some key terms:</h3>
+        <div class="card content-section">
+        <p><strong>Electromotive Force (EMF):</strong> The voltage generated by a change in magnetic flux, which drives current in a circuit. This is what powers the PIT tag when it enters the magnetic field of the reader.</p>
+        <p><strong>Inductance (L):</strong> A property of a coil (or inductor) that quantifies its ability to store energy in a magnetic field as current flows through it. The more turns in the coil and the larger its area, the higher the inductance.</p>
+        <p><strong>Capacitance (C):</strong> Capacitance is the ability of a component, known as a capacitor, to store electrical energy in the form of an electric charge. It is defined as the amount of charge a capacitor can store per unit of voltage applied across its plates. The unit of capacitance is the farad (F).</p>
+        <p><strong>Resonance:</strong> When a system oscillates at a particular frequency, known as its natural frequency. In the case of PIT tags, resonance occurs when the inductive and capacitive components of a circuit work together to maximize energy transfer.</p>
+        <p><strong>Mutual Inductance (M):</strong> The ability of one coil to induce an EMF in another coil when their magnetic fields interact. This is the principle that allows the reader to wirelessly transfer energy to the PIT tag.</p>
+        <p><strong>LC Circuit:</strong> A circuit consisting of an inductor (L) and a capacitor (C) that can resonate at a specific frequency, defined by the values of L and C. This is the backbone of both the reader and PIT tag’s operation.</p>
+    </div>
+    </div>
+
+    <div id="sectionLC" class="content">
+        <h2>Section 3: LC Circuits in PIT Tag Technology</h2>
+        <hr>
+        <h3>An LC circuit consists of an inductor (L) and a capacitor (C) connected together. These circuits are fundamental to RFID and PIT tag systems because they resonate at specific frequencies, enabling efficient energy transfer between the reader and the tag.</h3>
+        <br>
+        <h3>3.1 How LC Circuits Work</h3>
+        <div class="card content-section">
+        <p>LC circuits oscillate by transferring energy between the electric field of the capacitor and the magnetic field of the inductor. When the capacitor discharges, it sends current through the inductor, generating a magnetic field. As the magnetic field collapses, it induces current back into the capacitor, recharging it. This repeated energy transfer creates a continuous oscillation, with the frequency determined by the values of L (inductance) and C (capacitance).</p>
+        <br>
+        <p>The resonant frequency of an LC circuit is given by the formula:</p>
+        <div class="image-container">
+        <img src="images/LC_Formula.png" width="500">
+        </div>
+        <p>Where:</p>
+           <li> <strong>𝑓0</strong> is the resonant frequency in Hertz (Hz).</li>
+           <li> <strong>𝐿</strong> is the inductance in Henries (H).</li>
+           <li> <strong>𝐶</strong> is the capacitance in Farads (F).</li>
+        </div>
+        <h3>3.2 How the Inductor and Capacitor Work Together</h3>
+        <div class="card content-section">
+        <p>In the LC circuit, the inductor and capacitor perform complementary functions:</p>
+        <ul>
+            <li><strong>Inductor (L):</strong> Stores energy in a magnetic field when current flows through it. As the current decreases, the inductor releases the stored energy to maintain the current flow.</li>
+            <li><strong>Capacitor (C):</strong> Stores energy in an electric field when current charges its plates. As the capacitor discharges, it drives current through the inductor.</li>
+        </ul>
+        <p>This interaction creates a <strong>"counterbalance"</strong> effect:</p>
+        <ul>
+            <li>The capacitor charges up, storing energy.</li>
+            <li>The capacitor discharges, sending current through the inductor, creating a magnetic field.</li>
+            <li>The inductor stores this energy, and as the current drops, it sends the energy back to the capacitor.</li>
+        </ul>
+        <p>This back-and-forth energy exchange causes the circuit to resonate at its natural frequency. In PIT tag systems, this oscillation at 134.2 kHz is essential for efficient energy harvesting from the reader’s magnetic field.</p>
+        <div class="image-container">
+        <img src="images/LC_gif.gif" width="500">
+        </div>
+        <br>
+        <br> 
+        <li>The reservoir (capacitor) stores potential energy (charge) by holding back water (electric charge) behind the dam.</li>
+        <li>The turbine (inductor) resists the sudden flow of water (current), gradually building up its momentum and keeping the current steady as the water flows through.</li>
+        <li>When you release water from the reservoir, it flows through the turbine, generating energy. Similarly, in a circuit, the capacitor discharges stored charge, and the inductor regulates and smooths the flow of current as energy is transferred.</li>
+        <li>In a hydroelectric dam system, the reservoir stores water (like a capacitor stores charge), and the turbine controls and stabilizes the flow of water (like an inductor controls current).</li>
+        <br>
+        </div>
+        <h3>3.3 The PIT Tag’s LC Circuit: Resonance for Efficient Power Transfer</h3>
+        <div class="card content-section">
+        <p>Both the reader and the PIT tag contain LC circuits tuned to the same frequency of 134.2 kHz. When the reader emits a magnetic field, the tag’s LC circuit resonates with this field, maximizing energy transfer. This allows the tag to harvest enough energy to power its microchip, enabling it to transmit data back to the reader.</p>
+        <p>Resonance is vital in passive PIT tags because it enables the tag to function without a battery, relying entirely on energy harvested from the reader.</p>
+        </div>
+        <h3>3.4 LC Circuits in Antenna Design</h3>
+        <div class="card content-section">
+        <p>In RFID and PIT tag technology, the antenna coil serves as the inductor in the LC circuit. A capacitor is added to form a resonant circuit, tuned to the operating frequency of 134.2 kHz.</p>
+        <p>By adjusting the values of inductance and capacitance, the circuit can be fine-tuned to resonate at this frequency. Resonance enhances energy transfer between the reader and the tag, maximizing the current flowing through the antenna coil and ensuring effective communication.</p>
+        </div>
+        <h3>3.5 Effect of Changing Inductance and Capacitance</h3>
+        <div class="card content-section">
+        <p>Changing the values of inductance or capacitance alters the resonant frequency of the circuit:</p>
+        <ul>
+            <li><strong>Increasing Inductance (L):</strong> Lowers the resonant frequency. A higher inductance slows the oscillation of the circuit, similar to how a heavier pendulum swings more slowly.</li>
+            <li><strong>Decreasing Inductance (L):</strong> Raises the resonant frequency, as the circuit oscillates more quickly with less opposition to current changes.</li>
+            <li><strong>Increasing Capacitance (C):</strong> Lowers the resonant frequency, as a larger capacitor takes longer to charge and discharge, slowing down the oscillations.</li>
+            <li><strong>Decreasing Capacitance (C):</strong> Raises the resonant frequency, allowing the circuit to oscillate faster.</li>
+        </ul>
+        </div>
+        <h3>3.6 Practical Implications in PIT Tags</h3>
+        <div class="card content-section">
+        <p>Proper tuning of the LC circuit is essential for optimizing the performance of PIT tag systems. Deviations from the resonant frequency can lead to:</p>
+        <ul>
+            <li><strong>Off-Resonance:</strong> Reduced energy transfer between the reader and tag.</li>
+            <li><strong>Reduced Read Range:</strong> Poor resonance leads to weaker signals, reducing the effective communication range.</li>
+            <li><strong>Signal Distortion:</strong> Mismatched resonance can cause errors in data transmission.</li>
+        </ul>
+        <p>Maintaining precise values for L and C ensures efficient operation in the field, enabling the PIT tag to harvest enough energy and function properly.</p>
+        </div>
+        <hr>
+        
+        <!-- Interactive Resonance Frequency Calculator -->
+        <h3>Interactive Resonance Frequency Calculator</h3>
+<div class="slider-container">
+    <label class="slider-label" for="inductanceSlider">Inductance (L) in Henries:</label>
+    <input type="range" id="inductanceSlider" min="0.000001" max="0.001" step="0.000001" value="0.0001" oninput="updateFrequency()">
+    <span class="slider-value" id="inductanceValue">100 µH</span>
+</div>
+
+<div class="slider-container">
+    <label class="slider-label" for="capacitanceSlider">Capacitance (C) in Farads:</label>
+    <input type="range" id="capacitanceSlider" min="0.000000001" max="0.0001" step="0.000000001" value="0.00000001" oninput="updateFrequency()">
+    <span class="slider-value" id="capacitanceValue">10 nF</span>
+</div>
+
+<div class="frequency-display">
+    Resonance Frequency (f): <span id="frequencyValue">50.33 kHz</span>
+</div>
+
+<!-- Graph and Energy Distribution -->
+<div class="oscillation-container">
+    <canvas id="oscillationGraph" width="600" height="300"></canvas>
+</div>
+
+
+    </div>
+    
+    <div id="sectionGeneralPIT" class="content">
+        <h2>Section 4: General PIT Operations</h2>
+        <hr>
+        <h3>4.1 Electric Field Generation</h3>
+        <div class="card content-section">
+        <p>The reader generates an alternating electrical field which passes into the antenna, subsequently creating a magnetic field, resulting in an electromagnetic field. </p>
+        </div>
+        <h3>4.2 Resonance</h3>
+        <div class="card content-section">
+        <p>The LC circuit in the antenna amplifies this electromagnetic field and causes it to resonant at 134.2 kHz. The self-propagating wave, known as electromagnetic radiation, leaves the antenna and can interact with nearby conductive loops (like the PIT tag’s antenna coil). </p>
+        </div>
+        <h3>4.3 Inductive Coupling</h3>
+        <div class="card content-section">
+        <p>Inductive Coupling: Once the PIT tag enters the reader’s magnetic field, it becomes inductively coupled. Because the tag has encountered an alternating magnetic field, it therefore experiences an alternating electric field (Fardays Law) across the circuitry of the PIT tag, powering it.</p>
+        </div>
+        <h3>4.4 Backscatter Communication</h3>
+        <div class="card content-section">
+        <p>The circuitry of the PIT tag varies its internal impedance (electrical resistance), which because they are inductively coupled, creates tiny perturbations in the reader's electromagnetic field.  </p>
+        </div>
+        <h3>4.5 Detection</h3>
+        <div class="card content-section">
+        <p>The reader detects these disruptions as slight variations in the magnetic field strength or phase and translates it into binary data (0s and 1s).</p>
+        </div>
+        <h3>4.6 Demodulation</h3>
+        <div class="card content-section">
+        <p>The reader’s internal circuitry decodes the modulated signal into binary data. This data is then processed, revealing the unique ID or other information stored on the PIT tag.</p>
+        </div>
+        <hr>
+        <h3>Example: The antenna can be thought of as a flashlight. The reader can be though of as a device that measures the amount of light and is locatated behind the flashlight. The tag can be thought of as a mirror. When the light from the flashlight strikes the mirror it is reflected back to the measuring device resulting in an increased value of light. If you imagine the mirror spinning at a variable rate, the reader would experience period of light and dark which is akin to bianary code. (0 Dark) (1 Light)</h3>
+    </div>
+    
+    
+
+    <!-- Section 4: Communication Techniques -->
+    <div id="section4" class="content">
+        <h2>Section 5: RFID Communication Techniques</h2>
+        <hr>
+        <h3>5.1 Modulation Methods</h3>
+        <div class="card content-section">
+        <p>Modulation is the process of varying a carrier signal to transmit information. In RFID systems, modulation techniques are essential for encoding data onto the electromagnetic waves emitted by the tags and readers. Two primary communication protocols used in PIT tag systems are <strong>Full Duplex (FDX)</strong> and <strong> Half Duplex (HDX)</strong>.</p>
+        <br>
+        <p><strong>Full Duplex (FDX)</strong> communication allows simultaneous transmission and reception of signals. In FDX systems, the tag does not generate its own signal. Instead, it modulates the reader's magnetic field by varying its impedance, causing perturbations, typically using <strong>amplitutde-shift keying (ASK)</strong> modulation in the reader's field that the reader detects and decodes. The tag relies entirely on the energy in the reader's field for communication and doesn't transmit its own electromagnetic wave. This is a passive process.
+        </p>
+        <br>
+        <p><strong>Half Duplex (HDX)</strong> communication involves alternating periods of transmission and reception. In HDX systems, the tag actively transmits its signal during the reader's listening phase. After accumulating enough power from the reader’s magnetic field (via inductive coupling), the tag generates its own signal, typically using <strong>frequency-shift keying (FSK)</strong> modulation. The reader then listens for this signal after it temporarily stops transmitting its own field. This is an active process.</p>
+</div>
+        <h3>5.2 Modulation</h3>
+        <div class="card content-section">
+        <h4>Why FSK is Used in HDX:</h4>
+        <ul> The tag transmits at 123.2 kHz to represent a 1 and 134.2 kHz to represent a 0</ul>
+            <ul>Robust against noise: FSK is less sensitive to noise and interference, which makes it a reliable choice for HDX systems where the reader has to detect a signal during a quiet period.</ul>
+            <ul>for long distances: Since HDX tags transmit their own signal, FSK helps maintain data integrity over the longer read ranges typically associated with HDX systems.</ul>
+
+        <h4>Why ASK in FDX</h4>
+        <ul>The tag varies its internal impedance to change how much energy it absorbs from the reader’s field. This change in absorption results in small amplitude variations in the reader's magnetic field, which can be detected by the reader.</ul>
+        <ul>For example, when the tag's impedance is high, it absorbs more energy from the field, reducing the amplitude of the signal at the reader. When the impedance is low, less energy is absorbed, and the amplitude is stronger. These amplitude changes represent the binary data (0s and 1s).</ul>
+        <ul>ASK works well in FDX systems, where the tag is passively modulating the reader’s magnetic field without transmitting its own signal.</ul>
+        <br>
+        <div class="image-container">
+        <img src="images/Modulation.png" width="500">
+        </div>
+        <br>
+        <!-- ASK Modulation Canvas -->
+        <h3>ASK and FSK Modulation Visualizer</h3>
+    <div class="canvas-container">
+        <h4>ASK Modulation</h4>
+        <canvas id="askModulationCanvas" width="600" height="300"></canvas>
+    </div>
+    
+    <!-- FSK Modulation Canvas -->
+    <div class="canvas-container">
+        <h4>FSK Modulation</h4>
+        <canvas id="fskModulationCanvas" width="600" height="300"></canvas>
+    </div>
+    
+    <p>Press the 0 on the key to simulate modulatiion.</p>
+        </div>
+        <h3>Comparison of HDX and FDX Communication</h3>
+<div class="table-container">
+    <table id="comparisonTable" class="styled-table">
+        <thead>
+            <tr>
+                <th>Characteristic</th>
+                <th>HDX</th>
+                <th>FDX</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Read Range</td>
+                <td>Longer</td>
+                <td>Shorter</td>
+            </tr>
+            <tr>
+                <td>Read Time</td>
+                <td>Slower (due to alternating phases)</td>
+                <td>Faster (real-time, continuous)</td>
+            </tr>
+            <tr>
+                <td>Tag Complexity</td>
+                <td>More complex (requires energy storage)</td>
+                <td>Simpler, passive (no active components)</td>
+            </tr>
+            <tr>
+                <td>Cost of Tags</td>
+                <td>Typically higher</td>
+                <td>Generally lower</td>
+            </tr>
+            <tr>
+                <td>Signal Strength</td>
+                <td>Stronger (active transmission)</td>
+                <td>Weaker (passive backscatter)</td>
+            </tr>
+            <tr>
+                <td>Interference Sensitivity</td>
+                <td>Lower (reader transmits and listens separately)</td>
+                <td>Higher (continuous communication)</td>
+            </tr>
+            <tr>
+                <td>Power Accumulation</td>
+                <td>Required for tag transmission</td>
+                <td>Not needed (tags are passive)</td>
+            </tr>
+            <tr>
+                <td>Use Case</td>
+                <td>Better for long-range, low-density environments</td>
+                <td>Better for fast, high-density environments</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+    
+    
+    </div>
+
+   
+<!-- Section 6: Antenna Construction and other Considerations -->
+<div id="section6" class="content">
+    <h2>Section 6: Antenna Construction</h2>
+    <hr>
+
+    <!-- Antenna Construction Section -->
+    <h3 id="antennaConstruction">Antenna Construction</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>Antenna Windings:</strong> The construction of RFID antennas frequently involves the use of three loops of Litz wire to optimize inductance. Larger antennas typically require fewer windings because the overall inductance is determined by the total length of wire used. Smaller antennas need more loops to increase inductance and ensure the resonant circuit functions effectively.</li>
+      <li><strong>Winding Marking:</strong> During antenna construction, individual wires should be marked with tape to prevent inadvertent creation of closed loops. Post-tinning (as Litz wires are insulated to mitigate the skin effect), a continuity test should be conducted to verify appropriate connections.</li>
+      <li><strong>Connecting Litz Ends:</strong> To ensure robust connectivity when joining two ends of Litz wire, a ring terminal, speaker lug, or another secure connection mechanism should be employed. This mitigates the risk of poor electrical contact.</li>
+    </ul>
+    </div>
+
+    <!-- Antenna Design Section -->
+    <h3 id="antennaDesign">Antenna Design</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>Loop Separation:</strong> The physical separation of antenna coils can extend the duration a tag remains within the electromagnetic field, thus enhancing detection opportunities. However, this practice weakens the overall field strength and increases the risk of tag collisions, which occur when multiple tags are in the field simultaneously.</li>
+      <li><strong>Flat Plates vs. Passthroughs:</strong> The deployment of flat plate antennas demands considerably more time for anchoring compared to passthrough antennas, often due to their structural configuration and the need for precise placement.</li>
+      <li><strong>Turbulent Areas Setup:</strong> In high-turbulence environments, such as spillways, two antennas can be deployed with reversed polarity on one unit. This configuration can improve tag detection efficacy when tags are oriented suboptimally.</li>
+    </ul>
+    </div>
+
+    <!-- Cables and Connectivity Section -->
+    <h3 id="cablesConnectivity">Cables and Connectivity</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>CANBUS Cable:</strong> The CANBUS cable connecting the power source to the IS1001 should not exceed a length of 300 feet. In multi-reader configurations, the aggregate length of the system should be maintained below 500 feet to minimize signal degradation.</li>
+      <li><strong>Pigtail/Exciter Cable:</strong> The waterproof cable (commonly referred to as the "pigtail") connecting the IS1001 to the antenna must be kept under 6 feet in length to optimize performance and reduce signal loss.</li>
+      <li><strong>Ferrule Crimper:</strong> For all connections entering the IS1001, use of a ferrule crimper is recommended to ensure secure and reliable terminations.</li>
+    </ul>
+    </div>
+
+    <!-- Noise Management Section -->
+    <h3 id="noiseManagement">Noise Management</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>Noise Sources:</strong> Environmental noise can emanate from diverse sources, including power lines, transmission lines, and even remote submarines. Utilizing a portable loop to test environmental noise or deploying Software Defined Radios (SDR) can facilitate noise detection and assessment.</li>
+      <li><strong>Cable Management:</strong> Ensuring all cables are elevated off the ground is a simple yet effective strategy for mitigating noise-related issues.</li>
+      <li><strong>Firefly Testing Tool:</strong> The Firefly—a diagnostic tool consisting of an LED attached to a wire coiled around a ferrous core—serves as a visual aid for assessing electromagnetic fields. Unlike PIT tags, which may have diminished detection capabilities in high-noise environments, the Firefly will still illuminate, providing a realized representation of the potential detection range even in noisy conditions. This allows users to determine if poor detection is due to noise interference, and the actual detection range should subsequently be verified with PIT tags.</li>
+      <li><strong>Grounding Practice:</strong> Grounding is not implemented in these RFID systems—just like on naval vessels—because who needs ground loops making your life harder? Besides, if it's good enough for the Navy, it's good enough for us.</li>
+    </ul>
+    </div>
+
+    <!-- Power and Solar Considerations Section -->
+    <h3 id="powerSolar">Power and Solar Considerations</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>Solar Controller Connection:</strong> When connecting a solar controller, always connect the battery first, followed by the solar panel. Many solar controllers shut off power to the load side below a set voltage—often higher than the requirements of the IS1001. To circumvent this, it is advisable to run power directly from the batteries to the IS1001.</li>
+      <li><strong>Solar Charge Controllers:</strong> Solar charge controllers come in two main types: Maximum Power Point Tracking (MPPT) and Pulse Width Modulation (PWM). MPPT controllers are generally superior for RFID applications. If using an MPPT controller, disable PWM modulation to prevent interference with antenna operations.</li>
+      <li><strong>Power Consumption:</strong> At its highest setting, the IS1001 uses approximately 1 amp per hour, which equates to about 25.2 watts per hour. This consumption rate can vary slightly depending on external factors, such as exciter volatage level (AVE) and perhphial devices (modems).</li>
+      <li><strong>Idle Time:</strong> You can adjust the idle time to affect the duty cycle of the antenna. A value of 750 is equivelent to 750 ms of off time. This can greatly increase the battery life while sacraficing detection speed.</li>
+      <li>A 300W panel should be suffecient in most cases</li>
+      <li>Daily Energy Consumption=25.2watts×24hours=604.8watt-hours (Wh)</li>
+      <li>Daily Energy Production=300watts×5hours=1500watt-hours (Wh)</li>
+      
+    </ul>
+    </div>
+
+    <!-- Current, Sensitivity, and Tuning Section -->
+    <h3 id="currentSensitivity">Current, Sensitivity, and Tuning</h3>
+    <div class="card content-section">
+    <ul>
+      <li><strong>Amps and Sensitivity:</strong> The current (amperage) directly influences the sensitivity of the antenna, enhancing both tag detection and susceptibility to environmental noise. Amperage is primarily dictated by the voltage settings (AVE 1-5) and the physical attributes of the antenna, such as shape, size, and inductance, rather than by altering capacitance.</li>
+      <li><strong>Current Bell Curve:</strong> When tuning (AFT, NFT), amperage behavior should resemble a bell curve. If amperage starts low, spikes suddenly, and then drops off sharply, the antenna lacks sufficient operational area under the curve, thereby impairing tuning effectiveness. Also if you get a bimodal peak, you see the amps increasing, then starting back from a lower value, the capacitors on the IS1001 are likely damaged. Replace the board.</li>
+      <li><strong>Capacitor Adjustment:</strong> In tuning scenarios where the antenna capacitance values fall within the low range (100-500), decrease the installed capacitance. Conversely, if capacitance values are high (500-1024), increase the capacitive load. A phase reading that remains at zero typically indicates a disconnection within the circuit.</li>
+      <li><strong>Detection Range and Amperage:</strong> Detection capability is significantly constrained at a current of 1.1 amps, whereas the upper operational limit is 11 amps. A smaller antenna (approximately 20 feet in diameter) should ideally operate at around 9 amps, achieving a detection range of roughly 3 feet.</li>
+      <li><strong>Water Intrusion:</strong> A gradual decrease in amperage over time may indicate water intrusion within the antenna assembly, warranting inspection.</li>
+      <li><strong>Syncing Antennas:</strong> When synchronizing multiple antennas, designate them as "master" and "secondary master." The use of "slave" settings is discouraged due to its limitations in providing consistent communication.</li>
+    </ul>
+    </div>
+</div>
+
+
+
+    <!-- Combined Applications & Future Considerations Tab -->
+    <div id="applicationsFuture" class="content">
+        <h2>Section 7: Applications & Future Considerations</h2>
+        <hr>
+        <h3>7.1 Fish Tagging Methodologies</h3>
+        <div class="card content-section">
+        <p>Fish are tagged using minimally invasive surgical procedures. The fish are first anesthetized to reduce stress. A small incision is made to insert the PIT tag into the body cavity, and the incision is closed with sutures or tissue glue. The fish are then allowed to recover before being released back into their environment. Proper handling and surgical techniques minimize risks and ensure the well-being of the fish.</p>
+        </div>
+        <h3>7.2 Migration and Behavior Monitoring</h3>
+        <div class="card content-section">
+        <p>Fixed antenna arrays installed in rivers detect tagged fish as they pass, providing data on migration patterns and timing. Mobile readers allow researchers to locate fish in specific areas, assessing habitat use and behavior. The collected data is essential for understanding fish movements, habitat preferences, and responses to environmental changes.</p>
+        </div>
+        <h3>7.3 Data Analysis Techniques</h3>
+        <div class="card content-section">
+        <p>Data collected from PIT tags is analyzed using statistical models and GIS mapping to understand survival rates, movement patterns, and habitat preferences. This information supports fisheries management and conservation efforts. For example, survival estimation models help determine the effectiveness of conservation measures, while habitat utilization studies inform habitat restoration projects.</p>
+        </div>
+        <h3>7.4 Biological Impact on Fish Health</h3>
+        <div class="card content-section">
+        <p>The implantation of PIT tags can impose stress and potential health risks on fish. Handling and surgical procedures must be conducted carefully to minimize stress and prevent injury. Anesthesia reduces stress during tagging but must be managed correctly to avoid adverse effects. Monitoring fish after tagging ensures they recover properly and resume normal activities.</p>
+        </div>
+        <h3>7.5 Technological Innovations in RFID</h3>
+        <div class="card content-section">
+        <p>Advancements in RFID technology are leading to smaller, more efficient PIT tags. Miniaturization allows for tagging smaller species without impacting their health. Improvements in microchip design and antenna efficiency enhance read ranges and data reliability. Multi-frequency tags enable compatibility with different systems, facilitating broader data integration.</p>
+        </div>
+        <h3>7.6 Future Research Opportunities in Fisheries</h3>
+        <div class="card content-section">
+        <p>Future research opportunities include ecosystem-level studies that examine interactions between species and their environment. Assessing the impact of climate change on fish populations is another critical area. Advancements in automated data analysis, such as artificial intelligence and machine learning, enable the processing of large datasets to identify patterns and trends that may not be apparent through traditional analysis methods.</p>
+        </div>   
+    </div>
+
+<!-- Quiz Section -->
+<div id="quiz" class="content">
+    <h2>Quiz</h2>
+    <hr>
+    
+    <div class="question">
+        <h3>Question 1: What is the primary frequency used by Full Duplex (FDX) PIT tags in fisheries?</h3>
+        <label><input type="radio" name="q1" value="wrong"> A. 125 kHz</label><br>
+        <label><input type="radio" name="q1" value="correct"> B. 134.2 kHz</label><br>
+        <label><input type="radio" name="q1" value="wrong"> C. 148.5 kHz</label><br>
+        <label><input type="radio" name="q1" value="wrong"> D. 915 MHz</label><br>
+        <button onclick="checkAnswer('q1', 'correct', 'result1')">Submit</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 2: Which of the following is a key benefit of using PIT tags in fisheries management?</h3>
+        <label><input type="radio" name="q2" value="wrong"> A. Real-time video monitoring</label><br>
+        <label><input type="radio" name="q2" value="wrong"> B. Long-distance signal transmission</label><br>
+        <label><input type="radio" name="q2" value="correct"> C. Individual fish tracking without recapture</label><br>
+        <label><input type="radio" name="q2" value="wrong"> D. High signal-to-noise ratio detection</label><br>
+        <button onclick="checkAnswer('q2', 'correct', 'result2')">Submit</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 3: In a PIT tag system, the antenna serves what primary function?</h3>
+        <label><input type="radio" name="q3" value="wrong"> A. To power the tag</label><br>
+        <label><input type="radio" name="q3" value="wrong"> B. To encode the tag's data</label><br>
+        <label><input type="radio" name="q3" value="wrong"> C. To modulate the tag’s frequency</label><br>
+        <label><input type="radio" name="q3" value="correct"> D. To read the tag’s signal and send it to the reader</label><br>
+        <button onclick="checkAnswer('q3', 'correct', 'result3')">Submit</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 4: Which of the following types of antenna is most commonly used in PIT tag systems for detecting tags underwater?</h3>
+        <label><input type="radio" name="q4" value="correct"> A. Loop antenna</label><br>
+        <label><input type="radio" name="q4" value="wrong"> B. Dipole antenna</label><br>
+        <label><input type="radio" name="q4" value="wrong"> C. Yagi antenna</label><br>
+        <label><input type="radio" name="q4" value="wrong"> D. Parabolic antenna</label><br>
+        <button onclick="checkAnswer('q4', 'correct', 'result4')">Submit</button>
+        <div id="result4" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 5: When designing a PIT tag antenna, which factor primarily determines the detection range?</h3>
+        <label><input type="radio" name="q5" value="wrong"> A. The size of the PIT tag</label><br>
+        <label><input type="radio" name="q5" value="wrong"> B. The operating frequency</label><br>
+        <label><input type="radio" name="q5" value="correct"> C. The antenna's shape and coil size</label><br>
+        <label><input type="radio" name="q5" value="wrong"> D. The temperature of the water</label><br>
+        <button onclick="checkAnswer('q5', 'correct', 'result5')">Submit</button>
+        <div id="result5" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 6: Which of the following describes Half Duplex (HDX) PIT tag technology?</h3>
+        <label><input type="radio" name="q6" value="wrong"> A. The tag continuously transmits data without stopping</label><br>
+        <label><input type="radio" name="q6" value="correct"> B. The reader and tag alternate transmission of data</label><br>
+        <label><input type="radio" name="q6" value="wrong"> C. Both the tag and reader transmit data at the same time</label><br>
+        <label><input type="radio" name="q6" value="wrong"> D. The reader operates only during certain hours of the day</label><br>
+        <button onclick="checkAnswer('q6', 'correct', 'result6')">Submit</button>
+        <div id="result6" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 7: What role does the LC circuit play in a PIT tag antenna system?</h3>
+        <label><input type="radio" name="q7" value="correct"> A. It helps to store and release energy, tuning the antenna to the correct frequency</label><br>
+        <label><input type="radio" name="q7" value="wrong"> B. It encodes the fish’s tag ID</label><br>
+        <label><input type="radio" name="q7" value="wrong"> C. It powers the tag during transmission</label><br>
+        <label><input type="radio" name="q7" value="wrong"> D. It amplifies the signal from the reader</label><br>
+        <button onclick="checkAnswer('q7', 'correct', 'result7')">Submit</button>
+        <div id="result7" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 8: What is one of the main challenges in detecting PIT tags in fast-moving river systems?</h3>
+        <label><input type="radio" name="q8" value="wrong"> A. The tags can be damaged by high water pressure</label><br>
+        <label><input type="radio" name="q8" value="wrong"> B. Water can cause signal interference</label><br>
+        <label><input type="radio" name="q8" value="correct"> C. The movement of water can affect the orientation of the tag relative to the antenna</label><br>
+        <label><input type="radio" name="q8" value="wrong"> D. Fast-moving water decreases the reader’s range</label><br>
+        <button onclick="checkAnswer('q8', 'correct', 'result8')">Submit</button>
+        <div id="result8" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 9: When deploying PIT arrays in rivers, why is it critical to account for river geomorphology?</h3>
+        <label><input type="radio" name="q9" value="wrong"> A. To prevent antennas from overheating</label><br>
+        <label><input type="radio" name="q9" value="correct"> B. To select optimal locations that maximize tag detection and minimize interference from debris</label><br>
+        <label><input type="radio" name="q9" value="wrong"> C. To avoid disturbing the fish population</label><br>
+        <label><input type="radio" name="q9" value="wrong"> D. To ensure compliance with electrical safety codes</label><br>
+        <button onclick="checkAnswer('q9', 'correct', 'result9')">Submit</button>
+        <div id="result9" class="result"></div>
+    </div>
+
+    <div class="question">
+        <h3>Question 10: In a PIT tag system, how does backscatter work to transmit data from the tag to the reader?</h3>
+        <label><input type="radio" name="q10" value="wrong"> A. The tag generates its own signal to send data back to the reader</label><br>
+        <label><input type="radio" name="q10" value="correct"> B. The tag reflects and modulates the electromagnetic signal sent by the reader to encode and transmit its ID</label><br>
+        <label><input type="radio" name="q10" value="wrong"> C. The reader continuously powers the tag to send data through a dedicated channel</label><br>
+        <label><input type="radio" name="q10" value="wrong"> D. The tag uses solar power to emit a signal back to the reader</label><br>
+        <button onclick="checkAnswer('q10', 'correct', 'result10')">Submit</button>
+        <div id="result10" class="result"></div>
+    </div>
+
+</div>
+   
+ <!-- Scroll to Top Button -->
+ <div class="scroll-top" onclick="scrollToTop()">
+    &uarr;
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    &copy; 2024 Advanced RFID and PIT Tag Technology in Fisheries
+</div>
+
+<!-- Scripts -->
+<script>
+    // Function to enter the course from the hero section
+    function enterCourse() {
+        document.getElementById('hero').style.display = 'none';
+        document.getElementById('navBar').style.display = 'flex';
+        openTab(event, 'overview');
+    }
+
+    // Tab navigation functionality
+    function openTab(evt, tabName) {
+        var i, content, tabs;
+        content = document.getElementsByClassName("content");
+        for (i = 0; i < content.length; i++) {
+            content[i].style.display = "none";
+            content[i].classList.remove("active");
+        }
+        tabs = document.getElementsByClassName("nav")[0].getElementsByTagName("a");
+        for (i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        window.scrollTo(0, 0);
+    }
+
+    // Function to check answers
+    function checkAnswer(question, correctAnswer, resultId) {
+        var answers = document.getElementsByName(question);
+        var result = document.getElementById(resultId);
+        for (var i = 0; i < answers.length; i++) {
+            if (answers[i].checked) {
+                if (answers[i].value === correctAnswer) {
+                    result.textContent = "Correct!";
+                    result.style.color = "#28a745";
+                } else {
+                    result.textContent = "Incorrect!";
+                    result.style.color = "#dc3545";
+                }
+            }
+        }
+    }
+
+    // Function to update frequency based on sliders and animate LC oscillation
+function updateFrequency() {
+    var inductanceSlider = document.getElementById('inductanceSlider');
+    var capacitanceSlider = document.getElementById('capacitanceSlider');
+    var inductanceValue = parseFloat(inductanceSlider.value);
+    var capacitanceValue = parseFloat(capacitanceSlider.value);
+
+    var frequency = 1 / (2 * Math.PI * Math.sqrt(inductanceValue * capacitanceValue));
+    var frequencyKHz = (frequency / 1000).toFixed(2);
+
+    document.getElementById('frequencyValue').textContent = frequencyKHz + ' kHz';
+
+    // Update slider values display
+    document.getElementById('inductanceValue').textContent = (inductanceValue * 1e6).toFixed(0) + ' µH';
+    document.getElementById('capacitanceValue').textContent = (capacitanceValue * 1e9).toFixed(0) + ' nF';
+
+    // Call the animation function with the updated frequency
+    animateLCOscillation(frequencyKHz);
+}
+
+function animateLCOscillation(frequencyKHz) {
+    const canvas = document.getElementById('lcOscillationCanvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Variables for animation
+    const amplitude = 100;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const period = 1 / frequencyKHz; // Use frequency to set oscillation speed
+    let time = 0;
+
+    // Draw the oscillation between inductance and capacitance
+    function drawOscillation() {
+        // Clear previous frame
+        ctx.clearRect(0, 0, width, height);
+
+        // Set styles
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ff9500';
+        ctx.fillStyle = 'rgba(255, 149, 0, 0.3)';
+
+        // Draw Inductance "magnetic field" (left circle)
+        ctx.beginPath();
+        const leftCircleX = centerX - amplitude * Math.cos(time * period);
+        ctx.arc(leftCircleX, centerY, 30, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw Capacitance "electric field" (right circle)
+        ctx.beginPath();
+        const rightCircleX = centerX + amplitude * Math.cos(time * period);
+        ctx.arc(rightCircleX, centerY, 30, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw connection line between inductance and capacitance
+        ctx.beginPath();
+        ctx.moveTo(leftCircleX, centerY);
+        ctx.lineTo(rightCircleX, centerY);
+        ctx.stroke();
+
+        // Increase time for next frame
+        time += 0.05;
+
+        // Loop the animation
+        requestAnimationFrame(drawOscillation);
+    }
+
+    // Start the animation
+    drawOscillation();
+}
+
+// Initialize frequency on page load
+window.onload = function () {
+    updateFrequency();
+};
+
+// Function to update frequency based on sliders and animate LC oscillation
+function updateFrequency() {
+    var inductanceSlider = document.getElementById('inductanceSlider');
+    var capacitanceSlider = document.getElementById('capacitanceSlider');
+    var inductanceValue = parseFloat(inductanceSlider.value);
+    var capacitanceValue = parseFloat(capacitanceSlider.value);
+
+    // Resonant Frequency Formula
+    var frequency = 1 / (2 * Math.PI * Math.sqrt(inductanceValue * capacitanceValue));
+    var frequencyKHz = (frequency / 1000).toFixed(2);
+
+    document.getElementById('frequencyValue').textContent = frequencyKHz + ' kHz';
+
+    // Update slider values display
+    document.getElementById('inductanceValue').textContent = (inductanceValue * 1e6).toFixed(0) + ' µH';
+    document.getElementById('capacitanceValue').textContent = (capacitanceValue * 1e9).toFixed(0) + ' nF';
+
+    // Call the functions to animate the graph and energy distribution
+    animateOscillationGraph(frequencyKHz);
+    animateEnergyDistribution();
+}
+
+// Oscillation Graph
+function animateOscillationGraph(frequencyKHz) {
+    const canvas = document.getElementById('oscillationGraph');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Oscillation settings
+    const amplitude = 50;
+    const centerY = height / 2;
+    const period = 1 / frequencyKHz; // Use frequency to set oscillation speed
+    let time = 0;
+
+    // Draw the oscillation (sine wave)
+    function drawOscillation() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+
+        for (let x = 0; x < width; x++) {
+            let y = centerY + amplitude * Math.sin((x + time) * period);
+            ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = '#ff9500';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        time += 0.1;
+        requestAnimationFrame(drawOscillation);
+    }
+
+    drawOscillation();
+}
+
+
+
+// Initialize everything on page load
+window.onload = function () {
+    updateFrequency();
+};
+
+let isInterfering = false; // Tracks if the space bar is being pressed (for interference)
+
+// Function to draw ASK modulation
+function drawASKModulation() {
+    const canvas = document.getElementById('askModulationCanvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    let time = 0;
+    const frequency = 10;
+    const amplitude = height / 4;
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
+
+        // Draw the ASK waveform
+        for (let x = 0; x < width; x++) {
+            let carrierAmplitude = isInterfering ? amplitude / 5 : amplitude; // Reduce amplitude during interference
+            let y = height / 2 + carrierAmplitude * Math.sin(2 * Math.PI * frequency * (x / width) + time);
+            ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = '#ff9500';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        time += 0.1;
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+}
+
+// Function to draw FSK modulation
+function drawFSKModulation() {
+    const canvas = document.getElementById('fskModulationCanvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    let time = 0;
+    const lowFrequency = 8;
+    const highFrequency = 12;
+    const amplitude = height / 4;
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
+
+        // Draw the FSK waveform
+        for (let x = 0; x < width; x++) {
+            let freq = isInterfering ? highFrequency : lowFrequency; // Switch frequency during interference
+            let y = height / 2 + amplitude * Math.sin(2 * Math.PI * freq * (x / width) + time);
+            ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = '#ff9500';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        time += 0.1;
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+}
+
+// Handle spacebar keypress for interference
+window.addEventListener('keydown', function (e) {
+    if (e.code === 'Digit0' || e.code === 'Numpad0') {
+        isInterfering = true; // Activate interference
+    }
+});
+
+window.addEventListener('keyup', function (e) {
+    if (e.code === 'Digit0' || e.code === 'Numpad0') {
+        isInterfering = false; // Deactivate interference
+    }
+});
+
+// Initialize both modulation visuals
+window.onload = function () {
+    drawASKModulation();
+    drawFSKModulation();
+};
+
+
+    // Scroll to Top Functionality
+    window.onscroll = function() { scrollFunction(); };
+
+    function scrollFunction() {
+        var scrollTopBtn = document.querySelector('.scroll-top');
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollTopBtn.style.display = "block";
+        } else {
+            scrollTopBtn.style.display = "none";
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    function sortTable(columnIndex) {
+    const table = document.getElementById('comparisonTable');
+    let rows, switching, i, x, y, shouldSwitch, direction, switchCount = 0;
+    switching = true;
+    direction = 'asc'; // Set default sort direction
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName('TD')[columnIndex];
+            y = rows[i + 1].getElementsByTagName('TD')[columnIndex];
+
+            if (direction === 'asc') {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (direction === 'desc') {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchCount++;
+        } else {
+            if (switchCount === 0 && direction === 'asc') {
+                direction = 'desc';
+                switching = true;
+            }
+        }
+    }
+}
+
+</script>
+
+</body>
+</html>
